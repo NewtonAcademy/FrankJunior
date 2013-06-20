@@ -1,0 +1,24 @@
+# This is the .htaccess file for the FrankJunior API's directory.
+
+# Using the RewriteEngine, we will catch all request for this
+# directory or anything in it, and rewrite them as requests for
+# index.php. The original request path will be passed to index.php
+# in a query string variable named q.
+
+RewriteEngine On
+
+# Rewrite requests for the API directory itself:
+
+RewriteRule ^$ index.php?q=/ [L]
+
+# Rewrite requests for all other paths, unless the requested path is a real directory or file:
+
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME} !-f
+
+RewriteRule (.*) index.php?q=/$1 [L]
+
+# Note: In the <Directory> and .htaccess contexts, the RewriteEngine
+# only sees the part of the request path that is after the prefix
+# that lead the server to the current RewriteRule. That's why we
+# hardcode the leading / into the query string.
