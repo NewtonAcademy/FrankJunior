@@ -2,7 +2,7 @@
 
 ### What is FrankJunior?
 
-FrankJunior is a lightweight PHP framework with which you can quickly and easily build a database-backed RESTful API.
+FrankJunior is a lightweight framework implemented in PHP that enables you to quickly and easily deploy a database-backed RESTful API.
 
 ### Who wrote it?
 
@@ -23,5 +23,7 @@ FrankJunior is primarily a learning tool for developers in training. As such, no
 ### How does FrankJunior work?
 
 Once you've installed FrankJunior, check out the usage examples in the included `index.php` file. Simply put, you register "routes" with FrankJunior. A route is a request path to match, for example `/whut/else`. You also register a callback function for each route, for example `function(){ echo 'Some output.'; }`. When a request is made to FrankJunior, it finds the route that matches the request and invokes its callback function. Following our example, when the user loads `http://www.example.com/api/whut/else`, they'll see a page that says "Some output."
+
+### What are some of FrankJunior's features?
 
 The routes that you register can include named parameters, wildcards, and regular expressions, which makes FrankJunior really powerful and cool.

@@ -11,7 +11,7 @@
 		store this information outside the web root for security reasons. The file's contents
 		might look something like this:
 		<?php
-        define('DB_SERVER', 'localhost');
+		define('DB_SERVER', 'localhost');
 		define('DB_USER', 'root');
 		define('DB_PASSWORD', 'my-password');
 		define('DB_NAME', 'api_db');
