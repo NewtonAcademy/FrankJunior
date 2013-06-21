@@ -51,7 +51,7 @@
 
 	// Registering a route of / for a GET request:
 	get("/", function(){
-		echo 'Welcome to FrankJunior! You just made a GET request';
+		echo 'Welcome to FrankJunior! You just made a GET request.';
 	});
 
 	// Registering a route of /post for a POST request:	
