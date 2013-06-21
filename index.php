@@ -51,22 +51,22 @@
 
 	// Registering a route of / for a GET request:
 	get("/", function(){
-		echo 'Welcome to FrankJunior!';
+		echo 'Welcome to FrankJunior! You just made a GET request';
 	});
 
 	// Registering a route of /post for a POST request:	
 	post("/post", function(){
-		echo "post";
+		echo 'You just made a POST request.';
 	});
 
 	// Registering a route of /put for a PUT request:
 	put("/put", function(){
-		echo "put";
+		echo 'You just made a PUT request.';
 	});
 
 	// Registering a route of /delete for a DELETE request:
 	delete("/delete", function(){
-		echo "You just made a DELETE request ";
+		echo 'You just made a DELETE request.';
 	});
 
 /* -------------------------- Error handling examples ---------------------------- */
