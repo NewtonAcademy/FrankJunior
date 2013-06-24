@@ -15,7 +15,7 @@ FrankJunior is primarily a learning tool for developers in training. As such, no
 ### How do I install FrankJunior?
 
 1. Copy all of FrankJunior's files into a directory somewhere within your Apache-driven website's `DocumentRoot`. For the purposes of this `README`, we're going to assume your website is `www.example.com`, and that you've copied FrankJunior's files into `/api`.
-2. Create and save your database credentials file outside the website's root, as per the template provided in a comment inside `index.php`. If you don't have an existing database to use with FrankJunior, create a new one; just make sure the database name matches whatever is specified in the credentials file.
+2. Create and save your database connection file outside the website's root, as per the template provided in a comment inside `index.php`. If you don't have an existing database to use with FrankJunior, create a new one; just make sure the database name matches whatever is specified in the connection file.
 3. Make sure that Apache is configured to `AllowOverride` for the `/api` directory, so that the settings in the `.htaccess` file can take effect.
 4. Test your installation by visiting `http://www.example.com/api` in a browser. You should see a message that says "Welcome to FrankJunior!".
 5. Visit `http://www.example.com/api/colors`, which is the address of the example API included with FrankJunior. The first time you do so, the database table that this API utilizes will be automatically created.

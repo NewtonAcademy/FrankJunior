@@ -6,30 +6,23 @@
 		to run its functions, which you will call below. */
 	require 'fj/fj.php';
 	
-	/*	The following require imports a php file from outside our website's root
-		that defines parameters we will need in order to create a database connection. We
+	/*	The following require imports a php file which is stored outside our website's root
+		that defines a functiuon that creates and returns a database connection. We
 		store this information outside the web root for security reasons. The file's contents
 		might look something like this:
 		<?php
-		define('DB_SERVER', 'localhost');
-		define('DB_USER', 'root');
-		define('DB_PASSWORD', 'my-password');
-		define('DB_NAME', 'api_db');
+	        function db() {
+	                $host = "localhost";
+	                $user = "root";
+	                $password = "W372Kh7JEbQf6Nc";
+	                $database = "api_db";
+	
+	                return mysqli_connect($host, $user, $password, $database);
+	        }
+		?>
 	*/
 	require '/etc/apache2/sites-available/api_db.php';
-	
-	/*	The following function returns a database connection with the API's database 
-		selected. We'll use this connection later to interact with the database 
-		based on the client's request. */
-	function db ()
-	{
-		$connection = mysql_connect(DB_SERVER, DB_USER, DB_PASSWORD);
-	
-		mysql_select_db(DB_NAME);
-	
-		return $connection;
-	}
-	
+		
 	/*	The following function takes a PHP variable, and outputs it to the HTML response
 		as a JSON object. You'll call it once you have the PHP data that you want 
 		the API to return to the client. */
@@ -145,20 +138,18 @@
 					  `favcolor` tinytext NOT NULL DEFAULT '',
 					  `time` timestamp NOT NULL DEFAULT NOW()
 					  ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8";
-
-		$connection = db();
+				
+		db()->query($query);
 		
-		mysql_query($query, $connection);
-		
-		$result = mysql_query("SELECT * FROM `colors`", $connection);
+		$result = db()->query("SELECT * FROM `colors`");
 		
 		$rows = array();
 		
-		while ($row = mysql_fetch_assoc($result)) {
+		while ($row = mysqli_fetch_assoc($result)) {
 			$rows[] = $row;
 		}
 		
-		mysql_close($connection);
+		mysqli_close(db());
 		
 		// Unless the result set is empty, return them as JSON.
 		if($rows != array())
@@ -176,30 +167,26 @@
 	post("/color\/?", function(){
 	
 		$new_record = json_decode(file_get_contents('php://input'));
-						
-		$connection = db();
+								
+		db()->query("INSERT INTO `colors` VALUES (NULL, '$new_record->name', '$new_record->favcolor', NULL)");
 		
-		mysql_query("INSERT INTO `colors` VALUES (NULL, '$new_record->name', '$new_record->favcolor', NULL)", $connection);
-		
-		mysql_close($connection);
+		mysqli_close(db());
 	});
 
 	// Get all the records with a specific favorite color.
 	get("/colors/color/:color", function($params){
 	
 		$color = $params['color'];
-								
-		$connection = db();
 		
-		$result = mysql_query("SELECT * FROM `colors` WHERE `favcolor` = '$color'", $connection);
+		$result = db()->query("SELECT * FROM `colors` WHERE `favcolor` = '$color'");
 		
 		$rows = array();
 		
-		while ($row = mysql_fetch_assoc($result)) {
+		while ($row = mysqli_fetch_assoc($result)) {
 			$rows[] = $row;
 		}
 		
-		mysql_close($connection);
+		mysqli_close(db());
 		
 		json_response($rows);
 	});
@@ -208,18 +195,16 @@
 	get("/colors/name/:name", function($params){
 	
 		$name = $params['name'];
-								
-		$connection = db();
 		
-		$result = mysql_query("SELECT * FROM `colors` WHERE `name` = '$name'", $connection);
+		$result = db()->query("SELECT * FROM `colors` WHERE `name` = '$name'");
 		
 		$rows = array();
 		
-		while ($row = mysql_fetch_assoc($result)) {
+		while ($row = mysqli_fetch_assoc($result)) {
 			$rows[] = $row;
 		}
 		
-		mysql_close($connection);
+		mysqli_close(db());
 		
 		json_response($rows);
 	});
@@ -228,15 +213,13 @@
 	get("/colors/id/:id", function($params){
 	
 		$id = $params['id'];
-								
-		$connection = db();
 		
-		$result = mysql_query("SELECT * FROM `colors` WHERE `id` = $id", $connection);
+		$result = db()->query("SELECT * FROM `colors` WHERE `id` = $id");
 		
 		// There can only ever be one row, since ID is the primary key.
-		$record = mysql_fetch_assoc($result);
+		$record = mysqli_fetch_assoc($result);
 				
-		mysql_close($connection);
+		mysqli_close(db());
 		
 		json_response($record);
 	});
@@ -245,12 +228,10 @@
 	delete("/colors/id/:id", function($params){
 	
 		$id = $params['id'];
-								
-		$connection = db();
 		
-		mysql_query("DELETE FROM `colors` WHERE `id` = $id", $connection);
+		db()->query("DELETE FROM `colors` WHERE `id` = $id");
 		
-		mysql_close($connection);
+		mysqli_close(db());
 	});
 
 	// Update the single record with a specific ID.
@@ -259,10 +240,8 @@
 		$id = $params['id'];
 	
 		$update = json_decode(file_get_contents('php://input'));
-						
-		$connection = db();
 		
-		mysql_query("UPDATE `colors` SET `name` = '$update->name', `favcolor` = '$update->favcolor', `time` = NOW() WHERE `id` = $id", $connection);
+		db()->query("UPDATE `colors` SET `name` = '$update->name', `favcolor` = '$update->favcolor', `time` = NOW() WHERE `id` = $id");
 		
-		mysql_close($connection);
+		mysqli_close(db());
 	});
