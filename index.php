@@ -145,11 +145,11 @@
 		
 		$rows = array();
 		
-		while ($row = mysqli_fetch_assoc($result)) {
+		while ($row = $result->fetch_assoc()) {
 			$rows[] = $row;
 		}
 		
-		mysqli_close(db());
+		db()->close();
 		
 		// Unless the result set is empty, return them as JSON.
 		if($rows != array())
@@ -170,7 +170,7 @@
 								
 		db()->query("INSERT INTO `colors` VALUES (NULL, '$new_record->name', '$new_record->favcolor', NULL)");
 		
-		mysqli_close(db());
+		db()->close();
 	});
 
 	// Get all the records with a specific favorite color.
@@ -182,11 +182,11 @@
 		
 		$rows = array();
 		
-		while ($row = mysqli_fetch_assoc($result)) {
+		while ($row = $result->fetch_assoc()) {
 			$rows[] = $row;
 		}
 		
-		mysqli_close(db());
+		db()->close();
 		
 		json_response($rows);
 	});
@@ -200,11 +200,11 @@
 		
 		$rows = array();
 		
-		while ($row = mysqli_fetch_assoc($result)) {
+		while ($row = $result->fetch_assoc()) {
 			$rows[] = $row;
 		}
 		
-		mysqli_close(db());
+		db()->close();
 		
 		json_response($rows);
 	});
@@ -217,9 +217,9 @@
 		$result = db()->query("SELECT * FROM `colors` WHERE `id` = $id");
 		
 		// There can only ever be one row, since ID is the primary key.
-		$record = mysqli_fetch_assoc($result);
+		$record = $result->fetch_assoc();
 				
-		mysqli_close(db());
+		db()->close();
 		
 		json_response($record);
 	});
@@ -231,7 +231,7 @@
 		
 		db()->query("DELETE FROM `colors` WHERE `id` = $id");
 		
-		mysqli_close(db());
+		db()->close();
 	});
 
 	// Update the single record with a specific ID.
@@ -243,5 +243,5 @@
 		
 		db()->query("UPDATE `colors` SET `name` = '$update->name', `favcolor` = '$update->favcolor', `time` = NOW() WHERE `id` = $id");
 		
-		mysqli_close(db());
+		db()->close();
 	});
