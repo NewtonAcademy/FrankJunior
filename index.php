@@ -21,7 +21,7 @@
 	        }
 		?>
 	*/
-	require '/etc/apache2/sites-available/api_db.php';
+	require '/var/www/fj_db.php';
 		
 	/*	The following function takes a PHP variable, and outputs it to the HTML response
 		as a JSON object. You'll call it once you have the PHP data that you want 
