@@ -13,15 +13,15 @@
 		<?php
 	        function db() {
 	                $host = "localhost";
-	                $user = "root";
+	                $user = "www-data";
 	                $password = "W372Kh7JEbQf6Nc";
-	                $database = "api_db";
+	                $database = "frank_jr";
 	
 	                return mysqli_connect($host, $user, $password, $database);
 	        }
 		?>
 	*/
-	require '/var/www/fj_db.php';
+	require '/var/www/frank_jr-db.php';
 		
 	/*	The following function takes a PHP variable, and outputs it to the HTML response
 		as a JSON object. You'll call it once you have the PHP data that you want 

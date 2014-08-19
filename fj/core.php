@@ -58,17 +58,17 @@
 
 		// Extracts our request path from index.php?q=original_request_path and returns it.
 		private static function get_request(){
-		    if(!self::$request)
+		    if(!self::$request) {
 						
-				// Get the query string value into which the .htaccess file rewrote the request path.
-				$query = $_GET['q'];
-				
-				// Get the path to the current directory: Take the path to the current file, and remove the website's root directory from it.
-				$current_dir = str_replace($_SERVER['DOCUMENT_ROOT'], '', dirname(__FILE__));
-				
-				// Remove the path to the current directory from the request path, storing the result as our final request.
-		        self::$request = str_replace($current_dir, '', $query);
-
+  				// Get the query string value into which the .htaccess file rewrote the request path.
+  				$query = $_GET['q'];
+  				
+  				// Get the path to the current directory: Take the path to the current file, and remove the website's root directory from it.
+  				$current_dir = str_replace($_SERVER['DOCUMENT_ROOT'], '', dirname(__FILE__));
+  				
+  				// Remove the path to the current directory from the request path, storing the result as our final request.
+  		    self::$request = str_replace($current_dir, '', $query);
+        }
 			return self::$request;	
 		}
 
